@@ -29,6 +29,9 @@ public class HandTracker : MonoBehaviour
     Camera cam;
 
     Button selectedButton;
+    Slider selectedSlider;
+    Dropdown selectedDropdown;
+    Toggle selectedToggle;
 
     PointerEventData eventData = new PointerEventData(null);
     List<RaycastResult> raycastResults = new List<RaycastResult>();
@@ -49,6 +52,7 @@ public class HandTracker : MonoBehaviour
     {
         bool active = false;
         bool press = false;
+        bool clickDropdown = false;
         foreach (nuitrack.UserHands userHands in handTrackerData.UsersHands)
         {
             if (currentHand == Hands.right && userHands.RightHand != null)
@@ -79,13 +83,19 @@ public class HandTracker : MonoBehaviour
             EventSystem.current.RaycastAll(eventData, raycastResults);
 
             Button newButton = null;
+            Slider newSlider = null;
+            Dropdown newDropdown = null;
+            Toggle newToggle = null;
 
-            for (int q = 0; q < raycastResults.Count && newButton == null; q++)
+            for (int q = 0; q < raycastResults.Count && newButton == null && newSlider == null && newDropdown == null && newToggle == null; q++)
             {
                 newButton = raycastResults[q].gameObject.GetComponent<Button>();
-                Debug.Log(newButton);
+                newSlider = raycastResults[q].gameObject.GetComponent<Slider>();
+                newDropdown = raycastResults[q].gameObject.GetComponent<Dropdown>();
+                newToggle = raycastResults[q].gameObject.GetComponent<Toggle>();
             }
 
+            //Button
             if (newButton != selectedButton)
             {
                 if (selectedButton != null)
@@ -101,6 +111,7 @@ public class HandTracker : MonoBehaviour
             {
                 if (press)
                 {
+                    selectedSlider.OnInitializePotentialDrag(eventData);
                     if (eventData.delta.sqrMagnitude < dragSensitivity)
                     {
                         Debug.Log("In");
@@ -115,11 +126,101 @@ public class HandTracker : MonoBehaviour
                     selectedButton.OnPointerUp(eventData);
                 }
             }
+            float f = 1;
+            //Slider
+            if (newSlider != selectedSlider)
+            {
+                if (selectedSlider != null)
+                    selectedSlider.OnPointerExit(eventData);
+
+                selectedSlider = newSlider;
+
+
+                if (selectedSlider != null)
+                {
+                    selectedSlider.OnPointerEnter(eventData);
+                }
+
+            }
+
+            else if (selectedSlider != null)
+            {
+                if (press)
+                {
+                    f = GameObject.Find("RightHand").GetComponent<RectTransform>().offsetMax.y * -1;
+                    Debug.Log(f);
+                }
+            }
+            //Dropdown
+            if (newDropdown != selectedDropdown)
+            {
+                if (selectedDropdown != null)
+                    selectedDropdown.OnPointerExit(eventData);
+
+                selectedDropdown = newDropdown;
+
+                if (selectedDropdown != null)
+                    selectedDropdown.OnPointerEnter(eventData);
+            }
+
+            else if (selectedDropdown != null)
+            {
+                if (press && !clickDropdown)
+                {
+                    clickDropdown = true;
+                    if (eventData.delta.sqrMagnitude < dragSensitivity)
+                    {
+                        Debug.Log("In");
+                        eventData.dragging = true;
+                        selectedDropdown.OnPointerDown(eventData);
+                    }
+                    selectedDropdown.OnPointerClick(eventData);
+                }
+                else if (eventData.dragging)
+                {
+                    eventData.dragging = false;
+                    selectedDropdown.OnPointerUp(eventData);
+                }
+
+                if(press && clickDropdown)
+                {
+                    Debug.Log("Opened Dropdown");
+                    GameObject DdList = GameObject.Find("Dropdown List");
+                    Debug.Log(DdList.GetComponent<Canvas>().sortingOrder=0);
+                }
+            }
+
+            //Toogle
+            if (newToggle != selectedToggle)
+            {
+                if (selectedToggle != null)
+                    selectedToggle.OnPointerExit(eventData);
+
+                selectedToggle = newToggle;
+
+                if (selectedToggle != null)
+                    selectedToggle.OnPointerEnter(eventData);
+            }
+
+            else if (selectedToggle != null)
+            {
+                if (press)
+                {
+                    if (eventData.delta.sqrMagnitude < dragSensitivity)
+                    {
+                        Debug.Log("In");
+                        eventData.dragging = true;
+                        selectedToggle.OnPointerDown(eventData);
+                    }
+                    selectedToggle.OnPointerClick(eventData);
+                }
+                else if (eventData.dragging)
+                {
+                    eventData.dragging = false;
+                    selectedToggle.OnPointerUp(eventData);
+                }
+            }
         }
     }
-
-    void ClickMe()
-    {
-        Debug.Log("Button has been clicked");
-    }
+    
 }

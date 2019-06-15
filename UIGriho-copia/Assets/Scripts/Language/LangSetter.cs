@@ -9,7 +9,7 @@ public class LangSetter : MonoBehaviour
     public Transform transformEnglish;
     LangChooser langChooser = new LangChooser();
     private int count = 0;
-
+    private int soundIndex = 0;
     private string[] ESPMainText = new string[] { "Jugar", "Opciones", "Salir" };
     private string[] ESPPauseText = new string[] { "Salir", "Resumen", "Opciones", "Menú Principal" };
     private string[] ESPSettingsText = new string[] { "Sonido", "Video", "Idioma", "Volver" };
@@ -83,7 +83,7 @@ public class LangSetter : MonoBehaviour
     }
     private void SureTextChange(Transform menu, int counter)
     {
-        for (int i = 0; i < menu.GetChild(0).GetChildCount(); i++)
+        for (int i = 0; i < menu.GetChild(0).childCount; i++)
         {
             if (ContainsText("Message", menu.GetChild(0).GetChild(i)))
                 SetTextMeshProText(langChooser.getAreYouSure()[counter], menu.GetChild(0).GetChild(i));
@@ -156,9 +156,12 @@ public class LangSetter : MonoBehaviour
             {
                 if (ContainsText("Text", menu.GetChild(counter).GetChild(i)))
                 {
-                    SetTextMeshProText(langChooser.getSoundText()[count], menu.GetChild(counter).GetChild(i));
-                    count++;
+                    Debug.Log(soundIndex);
+                    Debug.Log(menu.GetChild(counter).GetChild(i));
+                    SetTextMeshProText(langChooser.getSoundText()[soundIndex], menu.GetChild(counter).GetChild(i));
                 }
+                soundIndex++;
+
             }
 
             else if (ContainsText("Volume", menu.GetChild(counter)))
@@ -172,6 +175,7 @@ public class LangSetter : MonoBehaviour
             
             
         }
+        soundIndex = 0;
     }
 
     private void SetVideoMenuText(Transform menu, int counter)

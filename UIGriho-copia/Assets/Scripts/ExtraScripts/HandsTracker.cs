@@ -36,10 +36,15 @@ public class HandsTracker : MonoBehaviour
     PointerEventData eventData = new PointerEventData(null);
     List<RaycastResult> raycastResults = new List<RaycastResult>();
 
+    public float TimeLeft = 1.0f;
+
+    private float _currentTimeLeft;
+
     float dragSensitivity = 5f;
 
     private void Start()
     {
+        _currentTimeLeft = TimeLeft;
         NuitrackManager.onHandsTrackerUpdate += NuitrackManager_onHandsTrackerUpdate;
     }
 
@@ -50,6 +55,10 @@ public class HandsTracker : MonoBehaviour
 
     private void NuitrackManager_onHandsTrackerUpdate(nuitrack.HandTrackerData handTrackerData)
     {
+        _currentTimeLeft -= Time.deltaTime;
+
+
+
         bool active = false;
         bool press = false;
         bool clickDropdown = false;
@@ -96,6 +105,9 @@ public class HandsTracker : MonoBehaviour
                 newToggle = raycastResults[q].gameObject.GetComponent<Toggle>();
             }
 
+        if (_currentTimeLeft < 0)
+        {
+            _currentTimeLeft = TimeLeft;
             //Slider
             if (newSlider != selectedSlider)
             {
@@ -185,7 +197,7 @@ public class HandsTracker : MonoBehaviour
                 }
             }
             //Button
-            if (newDropdown != selectedButton)
+            if (newButton != selectedButton)
             {
                 if (selectedButton != null)
                     selectedButton.OnPointerExit(eventData);
@@ -200,6 +212,7 @@ public class HandsTracker : MonoBehaviour
             {
                 if (press)
                 {
+
                     if (eventData.delta.sqrMagnitude < dragSensitivity)
                     {
                         Debug.Log("In");
@@ -215,6 +228,8 @@ public class HandsTracker : MonoBehaviour
                 }
             }
         }
+        }
     }
+        
 
 }

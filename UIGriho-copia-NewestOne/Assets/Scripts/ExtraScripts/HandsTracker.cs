@@ -108,66 +108,27 @@ public class HandsTracker : MonoBehaviour
         if (_currentTimeLeft < 0)
         {
             _currentTimeLeft = TimeLeft;
-            //Slider
-            if (newSlider != selectedSlider)
-            {
-                Debug.Log("hola");
-                if (selectedSlider != null)
-                    selectedSlider.OnPointerExit(eventData);
-
-                selectedSlider = newSlider;
-
-                if (selectedSlider != null)
-                    selectedSlider.OnPointerEnter(eventData);
-            }
-
-            else if (selectedSlider != null)
-            {
-                if (press)
-                    selectedSlider.OnDrag(eventData);
-            }
-
-            //Dropdown
-            if (newDropdown != selectedDropdown)
-            {
-                if (selectedDropdown != null)
-                    selectedDropdown.OnPointerExit(eventData);
-
-                selectedDropdown = newDropdown;
-
-                if (selectedDropdown != null)
-                    selectedDropdown.OnPointerEnter(eventData);
-            }
-
-            else if (selectedDropdown != null)
-            {
-                if (press && !clickDropdown)
+                //Slider
+                if (newSlider != selectedSlider)
                 {
-                    clickDropdown = true;
-                    if (eventData.delta.sqrMagnitude < dragSensitivity)
-                    {
-                        Debug.Log("In");
-                        eventData.dragging = true;
-                        selectedDropdown.OnPointerDown(eventData);
-                    }
-                    selectedDropdown.OnPointerClick(eventData);
-                }
-                else if (eventData.dragging)
-                {
-                    eventData.dragging = false;
-                    selectedDropdown.OnPointerUp(eventData);
+                    Debug.Log("hola");
+                    if (selectedSlider != null)
+                        selectedSlider.OnPointerExit(eventData);
+
+                    selectedSlider = newSlider;
+
+                    if (selectedSlider != null)
+                        selectedSlider.OnPointerEnter(eventData);
                 }
 
-                if (press && clickDropdown)
+                else if (selectedSlider != null)
                 {
-                    Debug.Log("Opened Dropdown");
-                    GameObject DdList = GameObject.Find("Dropdown List");
-                    Debug.Log(DdList.GetComponent<Canvas>().sortingOrder = 0);
+                    if (press)
+                        selectedSlider.OnDrag(eventData);
                 }
-            }
 
-            //Toogle
-            if (newToggle != selectedToggle)
+                //Toogle
+                if (newToggle != selectedToggle)
             {
                 if (selectedToggle != null)
                     selectedToggle.OnPointerExit(eventData);

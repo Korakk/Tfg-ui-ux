@@ -30,7 +30,7 @@ public class LangChooser : MonoBehaviour
         {
             titles = new string[] { "Pausa", "Opcions", "So", "Video", "Idioma" };
             mainText = new string[] { "Jugar", "Opcions", "Sortir" };
-            pauseText = new string[] { "Sortir", "Resumir", "Opcions", "Menú Principal" };
+            pauseText = new string[] {"Resumir", "Opcions", "Menú Principal", "Sortir" };
             settingsText = new string[] { "So", "Video", "Idioma", "Tornar" };
             soundText = new string[] { "Tornar", "Silenciar", "Silenciar", "Volum" };
             videoText = new string[] { "Tornar", "Pantalla Complerta", "Qualitat gràfica", "Resolució", "Per defecte", "Reiniciar" };
@@ -44,7 +44,7 @@ public class LangChooser : MonoBehaviour
         {
             titles = new string[] { "Pausa", "Opciones", "Sonido", "Video", "Idioma" };
             mainText = new string[] { "Jugar", "Opciones", "Salir" };
-            pauseText = new string[] { "Salir", "Resumen", "Opciones", "Menú Principal" };
+            pauseText = new string[] { "Resumen", "Opciones", "Menú Principal", "Salir" };
             settingsText = new string[] { "Sonido", "Video", "Idioma", "Volver" };
             soundText = new string[] { "Volver", "Silenciar", "Silenciar", "Volumen"};
             videoText = new string[] { "Volver", "Pantalla Completa", "Calidad gràfica", "Resolución", "Por defecto", "Reiniciar" };

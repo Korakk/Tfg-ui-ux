@@ -10,18 +10,6 @@ public class LangSetter : MonoBehaviour
     LangChooser langChooser = new LangChooser();
     private int count = 0;
     private int soundIndex = 0;
-    private string[] ESPMainText = new string[] { "Jugar", "Opciones", "Salir" };
-    private string[] ESPPauseText = new string[] { "Salir", "Resumen", "Opciones", "Menú Principal" };
-    private string[] ESPSettingsText = new string[] { "Sonido", "Video", "Idioma", "Volver" };
-    private string[] ESPSoundText = new string[] { "Volver", "Silenciar", "Silenciar", "Volumen" };
-    private string[] ESPVideoText = new string[] { "Volver", "Pantalla Completa", "Calidad gràfica", "Resolución", "Por defecto", "Reiniciar" };
-    private string[] ESPVideoTextGraphics = new string[] { "Alta", "Media", "Baja" };
-    private string[] ESPLanguageText = new string[] { "Volver", "Inglés", "Catalan", "Español" };
-    private string[] ESPAreYouSure = new string[] { "Quieres volver al menú principal?", "Salir del juego?", "Estás seguro que quieres volver a la configuración por defecto?", "Estás seguro que quieres volver a empezar?" };
-    private string[] ESP_CATAreYouSureBtn = new string[] { "Sí", "No" };
-    //private string[] CATAreYouSure = new string[] { "Vols tornar al menú principal?", "Sortir del joc?", "Estàs segur que vols tornar a la configuració per defecte", "Estàs segur que vols tornar a començar?" };
-    //private string[] ENGAreYouSure = new string[] { "Back to Main Menu?", "Exit the game?", "Are you sure you want to set DEFAULT configuration?", "Are you sure you want to RESTART the game?" };
-    //private string[] ENGAreYouSureBtn = new string[] { "Yes", "No" };
     
 
     public void TranslateText(string lang)
@@ -44,7 +32,6 @@ public class LangSetter : MonoBehaviour
             langChooser.setCAT();
             langChooser.setValues();
         }
-
         transformEnglish = gameObject.transform.GetChild(0);
         int count = gameObject.transform.childCount;
         int i;
@@ -193,7 +180,7 @@ public class LangSetter : MonoBehaviour
             else if (ContainsText("Toogle", menu.GetChild(counter)))
             {
                 if (ContainsText("Label", menu.GetChild(counter).GetChild(i)))
-                    SetTextMeshProText(ESPVideoText[counter - 1], menu.GetChild(counter).GetChild(i));
+                    SetTextMeshProText(langChooser.getMainVideoText()[counter - 1], menu.GetChild(counter).GetChild(i));
 
             } else if (ContainsText("Graphics Radios", menu.GetChild(counter))) {
                 if (ContainsText("Title", menu.GetChild(counter).GetChild(i)))

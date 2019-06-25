@@ -97,6 +97,12 @@ public class LangSetter : MonoBehaviour
             if (menu.name == "VideoMenu")
                 SetVideoMenuText(menu, counter);
 
+            if (menu.name == "ScreenMenu")
+                SetScreenMenuText(menu, counter);
+
+            if (menu.name == "GraphicsMenu")
+                SetGraphicsMenuText(menu, counter);
+
             if (menu.name == "LanguageMenu")
                 SetLanguageMenuText(menu, counter);
 
@@ -175,35 +181,75 @@ public class LangSetter : MonoBehaviour
             if (ContainsText("Button", menu.GetChild(counter)))
             {
                 if (ContainsText("Text", menu.GetChild(counter).GetChild(i)))
-                    SetTextMeshProText(langChooser.getMainVideoText()[counter-1], menu.GetChild(counter).GetChild(i));
+                    SetTextMeshProText(langChooser.getMainVideoOptionsText()[counter-1], menu.GetChild(counter).GetChild(i));
             }
+        }
+    }
+
+    public void SetScreenMenuText(Transform menu, int counter)
+    {
+        int i, index = 0;
+        if (ContainsText("Title", menu.GetChild(counter)))
+            SetTextMeshProText(langChooser.getTitles()[4], menu.GetChild(counter).GetChild(0));
+
+        for (i = 0; i < menu.GetChild(counter).childCount; i++)
+        {
+            if (ContainsText("Button", menu.GetChild(counter)))
+            {
+                if (ContainsText("Text", menu.GetChild(counter).GetChild(i)))
+                    SetTextMeshProText(langChooser.getVScreenText()[counter - 1], menu.GetChild(counter).GetChild(i));
+            }
+
             else if (ContainsText("Toogle", menu.GetChild(counter)))
             {
                 if (ContainsText("Label", menu.GetChild(counter).GetChild(i)))
-                    SetTextMeshProText(langChooser.getMainVideoText()[counter - 1], menu.GetChild(counter).GetChild(i));
+                    SetTextMeshProText(langChooser.getVScreenText()[counter - 1], menu.GetChild(counter).GetChild(i));
+            }
 
-            } else if (ContainsText("Graphics Radios", menu.GetChild(counter))) {
-                if (ContainsText("Title", menu.GetChild(counter).GetChild(i)))
-                    SetTextMeshProText(langChooser.getMainVideoText()[counter - 1], menu.GetChild(counter).GetChild(i));
-
-                else if (ContainsText("Background Image", menu.GetChild(counter).GetChild(i)))
-                {
-                    int j;
-                    for(j=0; j < menu.GetChild(counter).GetChild(i).childCount; j++)
-                    {
-                        if (ContainsText("Text", menu.GetChild(counter).GetChild(i).GetChild(j)))
-                        {
-                            SetTextMeshProText(langChooser.getVGraphicsText()[index], menu.GetChild(counter).GetChild(i).GetChild(j));
-                            index += 1;
-                        }
-
-                    }
-                }
-
-            } else if(ContainsText("Resolution", menu.GetChild(counter))){
-                SetTextMeshProText(langChooser.getMainVideoText()[counter - 1], menu.GetChild(counter));
+            else if (ContainsText("Resolution", menu.GetChild(counter)))
+            {
+                SetTextMeshProText(langChooser.getVScreenText()[counter - 1], menu.GetChild(counter));
+                SetTextMeshProText(langChooser.getVScreenText()[3], menu.GetChild(counter).GetChild(3));
             }
         }
+    }
+
+    public void SetGraphicsMenuText(Transform menu, int counter)
+    {
+            int i, index = 0;
+            if (ContainsText("Title", menu.GetChild(counter)))
+                SetTextMeshProText(langChooser.getTitles()[5], menu.GetChild(counter).GetChild(0));
+
+            for (i = 0; i < menu.GetChild(counter).childCount; i++)
+            {
+                if (ContainsText("Button", menu.GetChild(counter)))
+                {
+                    if (ContainsText("Text", menu.GetChild(counter).GetChild(i)))
+                        SetTextMeshProText(langChooser.getVGraphicsText()[3], menu.GetChild(counter).GetChild(i));
+                }
+
+                else if (ContainsText("Graphics Radios", menu.GetChild(counter)))
+                {
+                    if (ContainsText("Title", menu.GetChild(counter).GetChild(i)))
+                        SetTextMeshProText(langChooser.getVGraphicsText()[counter - 1], menu.GetChild(counter).GetChild(i));
+
+                    else if (ContainsText("Background Image", menu.GetChild(counter).GetChild(i)))
+                    {
+                        int j;
+                        for (j = 0; j < menu.GetChild(counter).GetChild(i).childCount; j++)
+                        {
+                            if (ContainsText("Text", menu.GetChild(counter).GetChild(i).GetChild(j)))
+                            {
+                                SetTextMeshProText(langChooser.getVGraphicsText()[index], menu.GetChild(counter).GetChild(i).GetChild(j));
+                                index += 1;
+                            }
+
+                        }
+                    }
+
+                }
+
+            }
     }
 
     private void SetLanguageMenuText(Transform menu, int counter)

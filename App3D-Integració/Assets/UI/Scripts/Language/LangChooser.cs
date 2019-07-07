@@ -16,7 +16,7 @@ public class LangChooser : MonoBehaviour
         {
             titles = new string[] { "Pause", "Settings", "Sound", "Video Options", "Screen", "Graphics Quality", "Language" };
             mainText = new string[] { "Play", "Settings", "Exit", "Skip Tutorial" };
-            pauseText = new string[] { "Exit the game", "Resume", "Settings", "Main Menu" };
+            pauseText = new string[] { "Resume", "Settings", "Main Menu", "Exit the game" };
             settingsText = new string[] { "Sound", "Video", "Language", "Back" };
             soundText = new string[] { "Back", "Mute", "Mute", "Volume" };
             videoOptions = new string[] { "Default", "Restart", "Back", "Screen", "Graphics"};
@@ -117,7 +117,8 @@ public class LangChooser : MonoBehaviour
         spanishActive = true;
         englishActive = false;
         catalanActive = false;
- 
+        PlayerPrefs.SetString("Lang", "ESP");
+
     }
 
     public void setENG()
@@ -126,6 +127,8 @@ public class LangChooser : MonoBehaviour
         englishActive = true;
         catalanActive = false;
 
+        PlayerPrefs.SetString("Lang", "ENG");
+
     }
 
     public void setCAT()
@@ -133,6 +136,8 @@ public class LangChooser : MonoBehaviour
         spanishActive = false;
         englishActive = false;
         catalanActive = true;
+
+        PlayerPrefs.SetString("Lang", "CAT");
 
     }
 }

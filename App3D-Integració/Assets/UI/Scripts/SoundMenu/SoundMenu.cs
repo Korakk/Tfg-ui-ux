@@ -11,7 +11,7 @@ public class SoundMenu : MonoBehaviour
     public Slider slider;
     public GameObject mute, unmute;
     private float volume;
-   
+
     public void SetVolume (float volume)
     {
         audioMixer.SetFloat("volume", volume);
@@ -21,6 +21,8 @@ public class SoundMenu : MonoBehaviour
             nearMinVolume.SetActive(true);
             nearMaxVolume.SetActive(false);
             maxVolume.SetActive(false);
+            PlayerPrefs.SetInt("soundIcon", 3);
+
         }
         else if(volume > -40 && volume < 0) { //near-max vol.
 
@@ -28,34 +30,44 @@ public class SoundMenu : MonoBehaviour
             nearMinVolume.SetActive(false);
             nearMaxVolume.SetActive(true);
             maxVolume.SetActive(false);
+            PlayerPrefs.SetInt("soundIcon", 2);
 
-        } else if(volume == 0) //max vol.
+        }
+        else if(volume == 0) //max vol.
         {
             minVolume.SetActive(false);
             nearMinVolume.SetActive(false);
             nearMaxVolume.SetActive(false);
             maxVolume.SetActive(true);
+            PlayerPrefs.SetInt("soundIcon", 1);
 
-        } else if(volume == -80){//min vol.
+
+        }
+        else if(volume == -80){//min vol.
 
             minVolume.SetActive(true);
             nearMinVolume.SetActive(false);
             nearMaxVolume.SetActive(false);
             maxVolume.SetActive(false);
+            PlayerPrefs.SetInt("soundIcon", 0);
 
         }
         this.volume = volume;
+        PlayerPrefs.SetFloat("volume", volume);
         volController();
     }
 
     public void MuteVolume()
     {
         audioMixer.SetFloat("volume", -80);
+        PlayerPrefs.SetInt("Mute", 1);
+
     }
 
     public void UnMuteVolume()
     {
         audioMixer.SetFloat("volume", volume);
+        PlayerPrefs.SetInt("Mute", 0);
 
     }
 
@@ -87,5 +99,21 @@ public class SoundMenu : MonoBehaviour
             unmute.SetActive(true);
             mute.SetActive(false);
         }
+    }
+
+    public void soundUiUpdate()
+    {
+        if(PlayerPrefs.GetInt("Mute") == 0)
+        {
+            unmute.SetActive(true);
+            mute.SetActive(false);
+            UnMuteVolume();
+        } else
+        {
+            unmute.SetActive(false);
+            mute.SetActive(true);
+            MuteVolume();
+        }
+        SetVolume(PlayerPrefs.GetFloat("volume"));
     }
 }

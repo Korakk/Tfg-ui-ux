@@ -32,17 +32,18 @@ public class LangSetter : MonoBehaviour
             langChooser.setCAT();
             langChooser.setValues();
         }
-        transformEnglish = gameObject.transform.GetChild(0);
-        int count = gameObject.transform.childCount;
+     
+        int count = transformEnglish.childCount;
         int i;
         for (i = 0; i < count; i++)
         {
-            ObtainMenuText(gameObject.transform.GetChild(i));
+            ObtainMenuText(transformEnglish.GetChild(i));
         }
     }
 
     private void ObtainMenuText(Transform menu)
     {
+        soundIndex = 0;
         SetAllMenusText(menu);
         SetAreYouSureBlock(menu);
     }
@@ -154,8 +155,6 @@ public class LangSetter : MonoBehaviour
                     SetTextMeshProText(langChooser.getSoundText()[soundIndex], menu.GetChild(counter).GetChild(i));
                     soundIndex += 1;
                 }
-                
-
             }
 
             else if (ContainsText("Volume", menu.GetChild(counter)))
@@ -165,9 +164,7 @@ public class LangSetter : MonoBehaviour
                 {
                     SetTextMeshProText(langChooser.getSoundText()[3], menu.GetChild(counter).GetChild(i));
                 }
-            }
-            
-            
+            }            
         }
     }
 

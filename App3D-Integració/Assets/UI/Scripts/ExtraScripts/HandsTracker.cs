@@ -61,7 +61,6 @@ public class HandsTracker : MonoBehaviour
 
         bool active = false;
         bool press = false;
-        bool clickDropdown = false;
         foreach (nuitrack.UserHands userHands in handTrackerData.UsersHands)
         {
             if (currentHand == Hands.right && userHands.RightHand != null)
@@ -93,102 +92,81 @@ public class HandsTracker : MonoBehaviour
 
             Button newButton = null;
             Slider newSlider = null;
-            Dropdown newDropdown = null;
             Toggle newToggle = null;
-            ScrollRect ddScrollRect = null;
 
-            for (int q = 0; q < raycastResults.Count && newButton == null && newSlider == null && newDropdown == null && newToggle == null; q++)
+            for (int q = 0; q < raycastResults.Count && newButton == null && newSlider == null && newToggle == null; q++)
             {
                 newButton = raycastResults[q].gameObject.GetComponent<Button>();
-                newSlider = raycastResults[q].gameObject.GetComponent<Slider>();
-                newDropdown = raycastResults[q].gameObject.GetComponent<Dropdown>();
                 newToggle = raycastResults[q].gameObject.GetComponent<Toggle>();
             }
 
-        if (_currentTimeLeft < 0)
-        {
-            _currentTimeLeft = TimeLeft;
-                //Slider
-                if (newSlider != selectedSlider)
-                {
-                    Debug.Log("hola");
-                    if (selectedSlider != null)
-                        selectedSlider.OnPointerExit(eventData);
-
-                    selectedSlider = newSlider;
-
-                    if (selectedSlider != null)
-                        selectedSlider.OnPointerEnter(eventData);
-                }
-
-                else if (selectedSlider != null)
-                {
-                    if (press)
-                        selectedSlider.OnDrag(eventData);
-                }
+            if (_currentTimeLeft < 0)
+            {
+                _currentTimeLeft = TimeLeft;
 
                 //Toogle
                 if (newToggle != selectedToggle)
-            {
-                if (selectedToggle != null)
-                    selectedToggle.OnPointerExit(eventData);
-
-                selectedToggle = newToggle;
-
-                if (selectedToggle != null)
-                    selectedToggle.OnPointerEnter(eventData);
-            }
-
-            else if (selectedToggle != null)
-            {
-                if (press)
                 {
-                    if (eventData.delta.sqrMagnitude < dragSensitivity)
+                    if (selectedToggle != null)
+                        selectedToggle.OnPointerExit(eventData);
+
+                    selectedToggle = newToggle;
+
+                    if (selectedToggle != null)
+                        selectedToggle.OnPointerEnter(eventData);
+                }
+
+                else if (selectedToggle != null)
+                {
+                    if (press)
                     {
-                        Debug.Log("In");
-                        eventData.dragging = true;
-                        selectedToggle.OnPointerDown(eventData);
+                        if (eventData.delta.sqrMagnitude < dragSensitivity)
+                        {
+                            Debug.Log("ToggleIn");
+                            eventData.dragging = true;
+                            selectedToggle.OnPointerDown(eventData);
+                        }
+                        selectedToggle.OnPointerClick(eventData);
                     }
-                    selectedToggle.OnPointerClick(eventData);
-                }
-                else if (eventData.dragging)
-                {
-                    eventData.dragging = false;
-                    selectedToggle.OnPointerUp(eventData);
-                }
-            }
-            //Button
-            if (newButton != selectedButton)
-            {
-                if (selectedButton != null)
-                    selectedButton.OnPointerExit(eventData);
-
-                selectedButton = newButton;
-
-                if (selectedButton != null)
-                    selectedButton.OnPointerEnter(eventData);
-            }
-
-            else if (selectedButton != null)
-            {
-                if (press)
-                {
-
-                    if (eventData.delta.sqrMagnitude < dragSensitivity)
+                    else if (eventData.dragging)
                     {
-                        Debug.Log("In");
-                        eventData.dragging = true;
-                        selectedButton.OnPointerDown(eventData);
+                        eventData.dragging = false;
+                        selectedToggle.OnPointerUp(eventData);
                     }
-                    selectedButton.OnPointerClick(eventData);
                 }
-                else if (eventData.dragging)
+
+                //Button
+                if (newButton != selectedButton)
                 {
-                    eventData.dragging = false;
-                    selectedButton.OnPointerUp(eventData);
+                    if (selectedButton != null)
+                        selectedButton.OnPointerExit(eventData);
+
+                    selectedButton = newButton;
+
+                    if (selectedButton != null)
+                        selectedButton.OnPointerEnter(eventData);
+                }
+
+                else if (selectedButton != null)
+                {
+                    if (press)
+                    {
+
+                        if (eventData.delta.sqrMagnitude < dragSensitivity)
+                        {
+                            Debug.Log("In");
+                            eventData.dragging = true;
+                            selectedButton.OnPointerDown(eventData);
+                        }
+                        selectedButton.OnPointerClick(eventData);
+                    }
+                    else if (eventData.dragging)
+                    {
+                        eventData.dragging = false;
+                        selectedButton.OnPointerUp(eventData);
+                    }
                 }
             }
-        }
         }
     }
         

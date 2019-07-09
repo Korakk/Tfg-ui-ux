@@ -14,6 +14,6 @@ public class Restart : MonoBehaviour
 
     public void RestartGamePause()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

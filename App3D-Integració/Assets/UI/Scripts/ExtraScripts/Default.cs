@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Default : MonoBehaviour
 {
     public GameObject mainblock;
-    public GameObject[] resCheck = new GameObject[4];
     public Slider Volume;
     public void DefaultConfig()
     {
@@ -19,9 +18,6 @@ public class Default : MonoBehaviour
         ls.TranslateText("ENG");
 
         //Resolution Axes
-        resCheck[0].SetActive(true);
-        resCheck[1].SetActive(false);
-        resCheck[2].SetActive(false);
-        resCheck[3].SetActive(false);
+        PlayerPrefs.SetString("Resolution", "1024");
     }
 }

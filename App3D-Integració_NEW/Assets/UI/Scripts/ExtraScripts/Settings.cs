@@ -13,7 +13,6 @@ public class Settings : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("hola-start");
         LangSetter ls = new LangSetter();
         ls.transformEnglish = mainblock.transform;
         ls.TranslateText(PlayerPrefs.GetString("Lang"));

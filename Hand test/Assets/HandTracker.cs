@@ -29,6 +29,7 @@ public class HandTracker : MonoBehaviour
     Camera cam;
 
     Button selectedButton;
+    Toggle selectedToggle;
 
     PointerEventData eventData = new PointerEventData(null);
     List<RaycastResult> raycastResults = new List<RaycastResult>();
@@ -79,12 +80,17 @@ public class HandTracker : MonoBehaviour
             EventSystem.current.RaycastAll(eventData, raycastResults);
 
             Button newButton = null;
+            Toggle newToggle = null;
 
             for (int q = 0; q < raycastResults.Count && newButton == null; q++)
             {
                 newButton = raycastResults[q].gameObject.GetComponent<Button>();
-                Debug.Log(newButton);
+                newToggle = raycastResults[q].gameObject.GetComponent<Toggle>();
+                Debug.Log(raycastResults[q].gameObject);
+                Debug.Log("hola");
+                Debug.Log(newToggle);
             }
+
 
             if (newButton != selectedButton)
             {
@@ -115,11 +121,37 @@ public class HandTracker : MonoBehaviour
                     selectedButton.OnPointerUp(eventData);
                 }
             }
-        }
-    }
 
-    void ClickMe()
-    {
-        Debug.Log("Button has been clicked");
+            //Toggle
+            if (newToggle != selectedToggle)
+            {
+                if (selectedToggle != null)
+                    selectedToggle.OnPointerExit(eventData);
+
+                selectedToggle = newToggle;
+
+                if (selectedToggle != null)
+                    selectedToggle.OnPointerEnter(eventData);
+            }
+
+            else if (selectedToggle != null)
+            {
+                if (press)
+                {
+                    if (eventData.delta.sqrMagnitude < dragSensitivity)
+                    {
+                        Debug.Log("In");
+                        eventData.dragging = true;
+                        selectedToggle.OnPointerDown(eventData);
+                    }
+                    selectedToggle.OnPointerClick(eventData);
+                }
+                else if (eventData.dragging)
+                {
+                    eventData.dragging = false;
+                    selectedToggle.OnPointerUp(eventData);
+                }
+            }
+        }
     }
 }
